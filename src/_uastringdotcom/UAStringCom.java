@@ -13,7 +13,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class Main {
+public class UAStringCom {
 
 	public static void main(String[] args) throws IOException, ParseException {
 		String root = "http://www.useragentstring.com/?getJSON=all&uas=";

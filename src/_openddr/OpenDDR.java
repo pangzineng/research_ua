@@ -13,11 +13,18 @@ import org.w3c.ddr.simple.Service;
 import org.w3c.ddr.simple.ServiceFactory;
 import org.w3c.ddr.simple.exception.NameException;
 
-public class Main {
+import batch.common.Constant.UAModel;
+
+public class OpenDDR {
 
 	private static Service service = null;
+	
+	private PropertyRef vendorRef;
+	private PropertyRef modelRef;
+	private PropertyRef isMobile;
+	private PropertyRef isTablet;
 
-	public static void main(String[] args) {
+	public OpenDDR() {
 		System.out.println("Initialize filter");
 		Properties properties = new Properties();
 
@@ -29,10 +36,6 @@ public class Main {
 		    throw new RuntimeException(ex);
 		}
 
-		PropertyRef vendorRef;
-		PropertyRef modelRef;
-		PropertyRef isMobile;
-		PropertyRef isTablet;
 	
 		try {
 		    vendorRef = service.newPropertyRef("vendor");
@@ -65,5 +68,60 @@ public class Main {
 	
     }
 	
+	public enum UAType_OpenDDR {
+		model, vendor, isMobile, isTablet, all
+	}
+	
+	public String readUA(String ua, UAType_OpenDDR type) {
+		PropertyRef[] propertyRefs;
+		switch(type){
+		case vendor:
+			propertyRefs = new PropertyRef[] {vendorRef};
+			break;
+		case model:
+			propertyRefs = new PropertyRef[] {modelRef};
+			break;
+		case isMobile:
+			propertyRefs = new PropertyRef[] {isMobile};
+			break;
+		case isTablet:
+			propertyRefs = new PropertyRef[] {isTablet};
+			break;
+		default:
+			propertyRefs = new PropertyRef[] {vendorRef, modelRef, isMobile, isTablet};
+			break;
+		}
+		
+		Evidence e = new ODDRHTTPEvidence();
+		e.put("User-Agent", ua);
+		PropertyValue value;
+		try {
+		    PropertyValues propertyValues = service.getPropertyValues(e, propertyRefs);
+		    switch(type){
+		    case vendor:
+		    	value = propertyValues.getValue(vendorRef);
+		    	break;
+		    case model:
+		    	value = propertyValues.getValue(modelRef);
+		    	break;
+		    case isMobile:
+		    	value = propertyValues.getValue(isMobile);
+		    	break;
+		    case isTablet:
+		    	value = propertyValues.getValue(isTablet);
+		    	break;
+		    default:
+		    	value = null; // TODO fill in this thing
+		    	break;
+		    }
 
+		    if(value.exists()){
+		    	return value.getString();
+		    } else {
+		    	return UAModel.unknown.name();
+		    }
+		} catch (Exception ex) {
+		    throw new RuntimeException(ex);
+		}
+	}
 }
