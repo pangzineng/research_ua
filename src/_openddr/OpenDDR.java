@@ -14,8 +14,9 @@ import org.w3c.ddr.simple.ServiceFactory;
 import org.w3c.ddr.simple.exception.NameException;
 
 import batch.common.Constant.UAModel;
+import batch.common.UAReader;
 
-public class OpenDDR {
+public class OpenDDR implements UAReader {
 
 	private static Service service = null;
 	
@@ -72,6 +73,18 @@ public class OpenDDR {
 		model, vendor, isMobile, isTablet, all
 	}
 	
+	@Override
+	public void read(String ua) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String get(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public String readUA(String ua, UAType_OpenDDR type) {
 		PropertyRef[] propertyRefs;
 		switch(type){
@@ -124,4 +137,5 @@ public class OpenDDR {
 		    throw new RuntimeException(ex);
 		}
 	}
+
 }

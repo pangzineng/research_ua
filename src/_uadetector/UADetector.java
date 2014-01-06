@@ -3,24 +3,39 @@ package _uadetector;
 import java.util.HashMap;
 import java.util.Map;
 
+import batch.common.UAReader;
 import net.sf.uadetector.ReadableUserAgent;
 import net.sf.uadetector.UserAgentStringParser;
 import net.sf.uadetector.service.UADetectorServiceFactory;
 
-public class UADetector {
+public class UADetector implements UAReader {
 
-	public static void main(String[] args) {
-		String ua = "Mozilla/5.0%20(iPad;%20CPU%20OS%205_1_1%20like%20Mac%20OS%20X)%20AppleWebKit/534.46%20(KHTML,%20like%20Gecko)%20CriOS/29.0.1547.11%20Mobile/9B206%20Safari/7534.48.3";
+	private UserAgentStringParser parser;
+	private Map<String, String> map;
+	
+	public UADetector() {
+		parser = UADetectorServiceFactory.getResourceModuleParser();
+		map = new HashMap<String, String>();
+	}
+
+	@Override
+	public void read(String ua) {
+		//String ua = "Mozilla/5.0%20(iPad;%20CPU%20OS%205_1_1%20like%20Mac%20OS%20X)%20AppleWebKit/534.46%20(KHTML,%20like%20Gecko)%20CriOS/29.0.1547.11%20Mobile/9B206%20Safari/7534.48.3";
 		
-		UserAgentStringParser parser = UADetectorServiceFactory.getResourceModuleParser();
 		ReadableUserAgent agent = parser.parse(ua);
-		for(Map.Entry<String, String> map : parse(agent).entrySet()){
+		parse(agent);
+		/*	for(Map.Entry<String, String> map : parse(agent).entrySet()){
 			System.out.println(map.getValue() + "\t\t\t: " + map.getKey());
-		}
+		}*/
 	}
 	
-	static Map<String, String> parse(ReadableUserAgent agent){
-		Map<String, String> map = new HashMap<String, String>();
+	@Override
+	public String get(String name){
+		return map.get(name);
+	}
+
+	private Map<String, String> parse(ReadableUserAgent agent){
+		map.clear();
 		map.put("agent.getIcon()", agent.getIcon());
 		map.put("agent.getName()", agent.getName());
 		map.put("agent.getProducer()", agent.getProducer());
@@ -38,5 +53,4 @@ public class UADetector {
 		map.put("agent.getVersionNumber()", agent.getVersionNumber().toVersionString());
 		return map;
 	}
-
 }
