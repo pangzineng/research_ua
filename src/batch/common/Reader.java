@@ -18,7 +18,7 @@ public class Reader {
 	private InputStream fis;
 	private JSONParser parser;
 	
-	static File[] readFolder(String dir){
+	public static File[] readFolder(String dir){
 		File logDir = new File(dir);
 		return logDir.listFiles();
 	}
@@ -39,6 +39,7 @@ public class Reader {
 	public JSONObject readLineAsJSON() {
 		try {
 			String log = readLine();
+			if (log==null) return null;
 			return (JSONObject) parser.parse(log);
 		} catch (IOException | ParseException e) {
 			//TODO Exception Handle

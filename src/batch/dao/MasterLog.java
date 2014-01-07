@@ -158,6 +158,6 @@ public class MasterLog {
 	}
 
 	public MasterLog(JSONObject jo) {
-		
+		this.agent = (String) jo.get("agent");
 	}
 }

@@ -8,7 +8,7 @@ import net.sourceforge.wurfl.core.WURFLManager;
 
 public class Wurfl implements UAReader {
 
-	private static String path = "file:///C:/Users/Administrator/git/OpenDDR/wurfl/";
+	private static String path = "file:///C:/Users/pang.zineng/git/research_ua/wurfl/";
 	private WURFLHolder wurflHolder;
 	private WURFLManager manager;
 	private Device device;
