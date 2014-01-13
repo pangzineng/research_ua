@@ -1,0 +1,30 @@
+if (ua == "-" || ua.containIgnoreCases("HealthChecker")) {
+	skip ++;
+	continue;
+}
+
+if (wurfl.getModel().containIgnoreCases("bot")) {
+	Blacklist.addBot(ua);
+	black ++;
+	continue;
+}
+
+// main purpose is to get the unique modelName first
+
+if(openDDR.getModel() == UNKNOWN && wurfl.getModel() == ¡°¡±){
+
+	// IE 10
+	If (ua.containIgnoreCases("MSIE 10") {
+		device = PC
+		model = desktop_IE10
+	}
+	// 
+	
+
+}
+
+
+print(skip);
+print(black);
+
+
