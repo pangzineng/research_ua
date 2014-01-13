@@ -31,7 +31,7 @@ public class R_DG_01_010 {
 		timer.currentTime("UAReaders Init");
 
 		Writer writer = new Writer("output.csv");
-		writer.write("o_model,o_device,w_model,w_device,u_device");
+		writer.write("o_model,o_device,w_model,w_device,u_device, raw");
 
 		for(File file : files){
 			
@@ -52,11 +52,12 @@ public class R_DG_01_010 {
 				timeReadUA += timer.currentTime();
 
 				StringBuilder sb = new StringBuilder();
-				sb.append(openDDR.get("model") + ",")
-				  .append(openDDR.get("isMobile")+openDDR.get("isTablet")+",")
-				  .append(wurfl.get("model_name") + ",")
-				  .append(wurfl.get("is_wireless_device")+wurfl.get("is_tablet")+",")
-				  .append(uaDetector.get("DeviceCategory"));
+				sb.append(openDDR.get("model") + "\t")
+				  .append(openDDR.get("isMobile")+openDDR.get("isTablet")+"\t")
+				  .append(wurfl.get("model_name") + "\t")
+				  .append(wurfl.get("is_wireless_device")+wurfl.get("is_tablet")+"\t")
+				  .append(uaDetector.get("DeviceCategory") + "\t")
+				  .append(ua);
 				writer.write(sb.toString());
 
 				jo = reader.readLineAsJSON();
